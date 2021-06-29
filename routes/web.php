@@ -25,6 +25,7 @@ Route::group(['middleware' => ['auth', 'isAdmin']], function(){
 
 });
 Route::group(['prefix'=>'admin'],function(){
+    Route::get('categories/{id}',[CategoryController::class,'destroy'])->whereNumber('id')->name('categories.destroy');
     Route::resource('categories',CategoryController::class);
 });
 Route::get('/admin', function () {

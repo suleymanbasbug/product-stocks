@@ -60,7 +60,8 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        return 'hi';
+        $category = Category::find($id) ?? abort(404,'Kategori Bulunamadı');
+        return view('categories.edit',compact('category'));
     }
 
     /**
@@ -73,6 +74,9 @@ class CategoryController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $category = Category::find($id) ?? abort(404,'Kategori Bulunamadı');
+        Category::where('id',$id)->update($request->except(['_method','_token']));
+        return redirect()->route('categories.index')->withSuccess('Kategori işlemi başarıyla gerçekleşti');
     }
 
     /**
@@ -83,6 +87,8 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $category = Category::find($id) ?? abort(404,'Kategori Bulunamadı');
+        $category->delete();
+        return redirect()->route('categories.index')->withSuccess('Kategori başarıyla silindi');
     }
 }
