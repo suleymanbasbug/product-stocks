@@ -22,38 +22,12 @@
         <a href="{{route('categories.edit',$category->id)}}"
            class="btn btn-block btn-primary btn-xs"><span class="glyphicon glyphicon-pencil"></span>
             Güncelle</a>
-            <button onclick="catdel(this.id)" id="{{$category->id}}"
-        class="btn btn-block btn-danger btn-xs"><span class="glyphicon glyphicon-pencil"></span>
-         Sil</button>
+            <a data-url="{{route('categories.destroy',$category->id)}}"
+        class="btn btn-block btn-danger btn-xs delete-confirm"><span class="glyphicon glyphicon-pencil"></span>
+         Sil</a>
     </td>
 </tr>
 @endforeach
 </tbody>
 </table>
 @endsection 
-@section('script')
-    <script>
-        function catdel (sd) {
-            Swal.fire({
-  title: 'Are you sure?',
-  text: "You won't be able to revert this!",
-  icon: 'warning',
-  showCancelButton: true,
-  confirmButtonColor: '#3085d6',
-  cancelButtonColor: '#d33',
-  confirmButtonText: 'Yes, delete it!'
-}).then((result) => {
-  if (result.isConfirmed) {
-    Swal.fire(
-      'Deleted!',
-      'Your file has been deleted.',
-      'success'
-    )
-    console.log(sd)
-    window.location.href = "{{URL::to('categories/')}}"
-  }
-})
-        }
-        var id = '123';
-    </script>
-@endsection
