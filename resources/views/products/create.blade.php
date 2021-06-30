@@ -1,5 +1,11 @@
 @extends('master')
 @section('content')
+    <div class="sa d-none" id="sa">
+      asdasdasdasdsad
+      asdasdas
+
+    </div>
+    <button onclick="sa()" class="btn btn-secondary">sa</button>
     <div class="card">
         <div class="card-body">
             <form
@@ -57,18 +63,25 @@
             </div>
             </form>
         </div>
+        
     </div>
 @endsection
 @section('script')
 <script>
+  function sa() {
+    $('#sa').removeClass("d-none");
+    $("#sa").append("<h1>Aleyküm Sa</h1>");
+  }
+</script>
+<script>
     $(document).ready(function (e) {
+      let images1 = [];
       $.ajaxSetup({
         headers: {
           "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
       });
       $(function () {
-        // Multiple images preview with JavaScript
         var ShowMultipleImagePreview = function (
           input,
           imgPreviewPlaceholder
@@ -88,16 +101,17 @@
         };
         $("#images").on("change", function () {
           ShowMultipleImagePreview(this, "div.show-multiple-image-preview");
+          images1.push($("#images")[0].files[0]);
         });
       });
       $("#multiple-image-preview-ajax").submit(function (e) {
         e.preventDefault();
         var formData = new FormData(this);
-        let TotalImages = $("#images")[0].files.length; //Total Images
-        console.log($("#images"));
+        let TotalImages = images1.length;
         let images = $("#images")[0];
         for (let i = 0; i < TotalImages; i++) {
-          formData.append("images" + i, images.files[i]);
+          console.log(images1[i])
+          formData.append("images" + i, images1[i]);
         }
         formData.append("TotalImages", TotalImages);
         $.ajax({
