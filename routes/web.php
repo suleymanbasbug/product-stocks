@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\BrandController;
+use App\Http\Controllers\ProductContoller;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -27,6 +29,9 @@ Route::group(['middleware' => ['auth', 'isAdmin']], function(){
 Route::group(['prefix'=>'admin'],function(){
     Route::get('categories/{id}',[CategoryController::class,'destroy'])->whereNumber('id')->name('categories.destroy');
     Route::resource('categories',CategoryController::class);
+    Route::get('brands/{id}',[BrandController::class,'destroy'])->whereNumber('id')->name('brands.destroy');
+    Route::resource('brands',BrandController::class);
+    Route::resource('products',ProductContoller::class);
 });
 Route::get('/admin', function () {
     return view('master');

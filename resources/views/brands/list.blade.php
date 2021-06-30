@@ -1,8 +1,8 @@
 @extends('master')
 @section('content')
     
-<a href="{{route("categories.create")}}" class="btn btn-info btn-md btn-block"> <span
-    class="glyphicon glyphicon-plus"></span>Kategori Ekle</a>
+<a href="{{route("brands.create")}}" class="btn btn-info btn-md btn-block"> <span
+    class="glyphicon glyphicon-plus"></span>Marka Ekle</a>
 <br>
 <table class="table">
 <thead>
@@ -13,16 +13,16 @@
 </tr>
 </thead>
 <tbody>
-@foreach ($categories as $category)
+@foreach ($brands as $brand)
 <tr>
-    <td>{{$category->id}}</td>
-    <td>{{$category->name}}</td>
+    <td>{{$brand->id}}</td>
+    <td>{{$brand->name}}</td>
 
     <td>
-        <a href="{{route('categories.edit',$category->id)}}"
+        <a href="{{route('brands.edit',$brand->id)}}"
            class="btn btn-block btn-primary btn-xs"><span class="glyphicon glyphicon-pencil"></span>
             Güncelle</a>
-            <a data-url="{{route('categories.destroy',$category->id)}}"
+            <a data-url="{{route('brands.destroy',$brand->id)}}"
         class="btn btn-block btn-danger btn-xs delete-confirm"><span class="glyphicon glyphicon-pencil"></span>
          Sil</a>
     </td>
