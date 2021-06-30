@@ -2,7 +2,13 @@
 @section('content')
     <div class="card">
         <div class="card-body">
-            <form method="POST" action="{{route('products.store')}}" method="post" id="upload-image-form" enctype="multipart/form-data">
+            <form
+          id="multiple-image-preview-ajax"
+          method="POST"
+          action="{{route('products.store')}}"
+          accept-charset="utf-8"
+          enctype="multipart/form-data"
+        >
             @csrf
             <div class="form-group">
                 <label>Ürün Adı</label>
@@ -28,10 +34,24 @@
                     @endforeach
                   </select>
             </div>
-            <div class="form-group">
-                <input type="file" name="file" class="form-control" id="image-input">
-                <span class="text-danger" id="image-input-error"></span>
-            </div>
+            <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <input
+                      type="file"
+                      name="images[]"
+                      id="images"
+                      placeholder="Choose images"
+                      multiple
+                    />
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="mt-1 text-center">
+                    <div class="show-multiple-image-preview"></div>
+                  </div>
+                </div>
+              </div>
             <div class="form-group">
                 <button type="submit" class="btn btn-success btn-sm btn-block mt-3">Ürün Ekle</button>
             </div>
@@ -41,36 +61,64 @@
 @endsection
 @section('script')
 <script>
-    console.log('asd')
-    $.ajaxSetup({
+    $(document).ready(function (e) {
+      $.ajaxSetup({
         headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+      });
+      $(function () {
+        // Multiple images preview with JavaScript
+        var ShowMultipleImagePreview = function (
+          input,
+          imgPreviewPlaceholder
+        ) {
+          if (input.files) {
+            var filesAmount = input.files.length;
+            for (i = 0; i < filesAmount; i++) {
+              var reader = new FileReader();
+              reader.onload = function (event) {
+                $($.parseHTML("<img>"))
+                  .attr("src", event.target.result)
+                  .appendTo(imgPreviewPlaceholder);
+              };
+              reader.readAsDataURL(input.files[i]);
+            }
+          }
+        };
+        $("#images").on("change", function () {
+          ShowMultipleImagePreview(this, "div.show-multiple-image-preview");
+        });
+      });
+      $("#multiple-image-preview-ajax").submit(function (e) {
+        e.preventDefault();
+        var formData = new FormData(this);
+        let TotalImages = $("#images")[0].files.length; //Total Images
+        console.log($("#images"));
+        let images = $("#images")[0];
+        for (let i = 0; i < TotalImages; i++) {
+          formData.append("images" + i, images.files[i]);
         }
+        formData.append("TotalImages", TotalImages);
+        $.ajax({
+          type: "POST",
+          url: "{{ url('admin/products')}}",
+          data: formData,
+          cache: false,
+          contentType: false,
+          processData: false,
+          success: (data) => {
+              console.log(data);
+            this.reset();
+            alert("Images has been uploaded using jQuery ajax with preview");
+            $(".show-multiple-image-preview").html("");
+          },
+          error: function (data) {
+            console.log(data);
+          },
+        });
+      });
     });
-
-   $('#upload-image-form').submit(function(e) {
-       e.preventDefault();
-       let formData = new FormData(this);
-       $('#image-input-error').text('');
-
-       $.ajax({
-          type:'POST',
-          url: {{route('products.store')}},
-           data: formData,
-           contentType: false,
-           processData: false,
-           success: (response) => {
-             if (response) {
-               this.reset();
-               alert('Image has been uploaded successfully');
-             }
-           },
-           error: function(response){
-              console.log(response);
-                $('#image-input-error').text(response.responseJSON.errors.file);
-           }
-       });
-  });
-
-</script>
+  </script>
+ 
 @endsection

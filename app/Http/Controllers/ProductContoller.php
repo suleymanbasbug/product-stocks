@@ -41,6 +41,8 @@ class ProductContoller extends Controller
      */
     public function store(Request $request)
     {
+        return $request;
+        return $request->file('file');
         $request->validate([
             'file' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
