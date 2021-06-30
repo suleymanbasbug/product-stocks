@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\Brand;
+use App\Models\Image;
 
 class ProductContoller extends Controller
 {
@@ -40,7 +41,22 @@ class ProductContoller extends Controller
      */
     public function store(Request $request)
     {
-        return $request->all();
+        $request->validate([
+            'file' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+        $image = new Image;
+        if ($request->file('file')) {
+            $imagePath = $request->file('file');
+            $imageName = $imagePath->getClientOriginalName();
+
+            $path = $request->file('file')->storeAs('uploads', $imageName, 'public');
+        }
+        $image->name = $imageName;
+        $image->path = '/storage/'.$path;
+        $image->product_id = 1;
+        $image->save();
+
+        return response()->json('Image uploaded successfully');
     }
 
     /**
