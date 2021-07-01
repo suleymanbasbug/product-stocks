@@ -84,6 +84,8 @@ class ColorController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $color=Color::find($id) ?? abort(404,'Renk bulunamadı');
+        $color->delete();
+        return redirect()->route('colors.index')->withSuccess('Renk başarıyla silindi');
     }
 }

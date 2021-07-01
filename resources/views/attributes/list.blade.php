@@ -1,10 +1,10 @@
 @extends('master')
 @section('content')
     
-<a href="{{route("platforms.create")}}" class="btn btn-info btn-md btn-block"> <span
-    class="glyphicon glyphicon-plus"></span>Platform Ekle</a>
+<a href="{{route("attributes.create")}}" class="btn btn-info btn-md btn-block"> <span
+    class="glyphicon glyphicon-plus"></span>Özellik Ekle</a>
 <br>
-@if (count($platforms)>0)
+@if (count($attributes)>0)
 <table class="table">
     <thead>
     <tr>
@@ -14,16 +14,16 @@
     </tr>
     </thead>
     <tbody>
-    @foreach ($platforms as $platform)
+    @foreach ($attributes as $attribute)
     <tr>
-        <td>{{$platform->id}}</td>
-        <td>{{$platform->name}}</td>
+        <td>{{$attribute->id}}</td>
+        <td>{{$attribute->name}}</td>
     
         <td>
-            <a href="{{route('platforms.edit',$platform->id)}}"
+            <a href="{{route('attributes.edit',$attribute->id)}}"
                class="btn btn-block btn-primary btn-xs"><span class="glyphicon glyphicon-pencil"></span>
                 Güncelle</a>
-                <a data-url="{{route('platforms.destroy',$platform->id)}}"
+                <a data-url="{{route('attributes.destroy',$attribute->id)}}"
             class="btn btn-block btn-danger btn-xs delete-confirm"><span class="glyphicon glyphicon-pencil"></span>
              Sil</a>
         </td>
@@ -32,7 +32,7 @@
     </tbody>
     </table>
 @else
-    <div class="mt-4"><h2>Kayıtlı platform bulunamadı. Lütfen renk ekleyiniz...</h2></div>
+    <div class="mt-4"><h2>Kayıtlı özellik bulunamadı. Lütfen özellik ekleyiniz...</h2></div>
 @endif
 
 @endsection

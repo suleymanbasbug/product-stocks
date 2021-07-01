@@ -6,6 +6,7 @@ use App\Http\Controllers\BrandController;
 use App\Http\Controllers\ProductContoller;
 use App\Http\Controllers\ColorController;
 use App\Http\Controllers\PlatformController;
+use App\Http\Controllers\AttributeController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -35,8 +36,12 @@ Route::group(['prefix'=>'admin'],function(){
     Route::resource('brands',BrandController::class);
     Route::get('products/{id}',[ProductContoller::class,'destroy'])->whereNumber('id')->name('products.destroy');
     Route::resource('products',ProductContoller::class);
+    Route::get('colors/{id}',[ColorController::class,'destroy'])->whereNumber('id')->name('colors.destroy');
     Route::resource('colors',ColorController::class);
+    Route::get('platforms/{id}',[PlatformController::class,'destroy'])->whereNumber('id')->name('platforms.destroy');
     Route::resource('platforms',PlatformController::class);
+    Route::get('attributes/{id}',[AttributeController::class,'destroy'])->whereNumber('id')->name('attributes.destroy');
+    Route::resource('attributes',AttributeController::class);
 });
 Route::get('/admin', function () {
     return view('master');

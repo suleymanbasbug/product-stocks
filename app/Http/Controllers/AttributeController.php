@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Platform;
+use App\Models\Attribute;
 
-class PlatformController extends Controller
+class AttributeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +14,8 @@ class PlatformController extends Controller
      */
     public function index()
     {
-        $platforms = Platform::all();
-        return view('platforms.list',compact('platforms'));
+        $attributes = Attribute::all();
+        return view('attributes.list',compact('attributes'));
     }
 
     /**
@@ -25,7 +25,7 @@ class PlatformController extends Controller
      */
     public function create()
     {
-        return view('platforms.create');
+        return view('attributes.create');
     }
 
     /**
@@ -36,8 +36,8 @@ class PlatformController extends Controller
      */
     public function store(Request $request)
     {
-        Platform::create($request->post());
-        return redirect()->route('platforms.index')->withSuccess('Platform başarılı şekilde eklendi');
+        Attribute::create($request->post());
+        return redirect()->route('attributes.index')->withSuccess('Özellik başarıyla eklendi');
     }
 
     /**
@@ -59,8 +59,8 @@ class PlatformController extends Controller
      */
     public function edit($id)
     {
-        $platform = Platform::find($id) ?? abort(404,'Platform bulunamadı');
-        return view('platforms.edit',compact('platform'));
+        $attribute = Attribute::find($id) ?? abort(404,'Özellik bulunamadı');
+        return view('attributes.edit',compact('attribute'));
     }
 
     /**
@@ -72,9 +72,10 @@ class PlatformController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $platform = Platform::find($id) ?? abort(404,'Kategori Bulunamadı');
-        Platform::where('id',$id)->update($request->except(['_method','_token']));
-        return redirect()->route('platforms.index')->withSuccess('Platform güncelleme işlemi başarıyla gerçekleşti');
+        $attribute = Attribute::find($id) ?? abort(404,'Özellik bulunamadı');
+        Attribute::where('id',$id)->update($request->except(['_method','_token']));
+        return redirect()->route('attributes.index')->withSuccess('Özellik başarıyla güncellendi');
+
     }
 
     /**
@@ -85,8 +86,8 @@ class PlatformController extends Controller
      */
     public function destroy($id)
     {
-        $platform=Platform::find($id) ?? abort(404,'Platform bulunamadı');
-        $platform->delete();
-        return redirect()->route('platforms.index')->withSuccess('Platform başarıyla silindi');
+        $attribute=Attribute::find($id) ?? abort(404,'Özellik bulunamadı');
+        $attribute->delete();
+        return redirect()->route('attributes.index')->withSuccess('Özellik başarıyla silindi');
     }
 }

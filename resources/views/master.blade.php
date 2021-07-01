@@ -49,6 +49,10 @@
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Platformlar
                             </a>
+                            <a class="nav-link" href="{{route('attributes.index')}}">
+                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                                Özellikler
+                            </a>
                         </div>
                     </div>
                 </nav>
