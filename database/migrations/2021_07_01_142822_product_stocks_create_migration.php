@@ -16,6 +16,16 @@ class ProductStocksCreateMigration extends Migration
         Schema::create('product_stocks', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->unsignedBigInteger('product_id');
+            $table->foreign('product_id')->references('id')->on('products');
+            $table->unsignedBigInteger('color_id');
+            $table->foreign('color_id')->references('id')->on('colors');
+            $table->unsignedBigInteger('attribute_id');
+            $table->foreign('attribute_id')->references('id')->on('attributes');
+            $table->unsignedBigInteger('platform_id');
+            $table->foreign('platform_id')->references('id')->on('platforms');
+            $table->decimal('price');
+            $table->integer('stock');
         });
     }
 

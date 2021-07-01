@@ -7,6 +7,7 @@ use App\Http\Controllers\ProductContoller;
 use App\Http\Controllers\ColorController;
 use App\Http\Controllers\PlatformController;
 use App\Http\Controllers\AttributeController;
+use App\Http\Controllers\ProductStocksController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -42,6 +43,7 @@ Route::group(['prefix'=>'admin'],function(){
     Route::resource('platforms',PlatformController::class);
     Route::get('attributes/{id}',[AttributeController::class,'destroy'])->whereNumber('id')->name('attributes.destroy');
     Route::resource('attributes',AttributeController::class);
+    Route::resource('productstocks',ProductStocksController::class);
 });
 Route::get('/admin', function () {
     return view('master');
