@@ -41,11 +41,11 @@
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Markalar
                             </a>
-                            <a class="nav-link" href="index.html">
+                            <a class="nav-link" href="{{route('colors.index')}}">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Renkler
                             </a>
-                            <a class="nav-link" href="index.html">
+                            <a class="nav-link" href="{{route('platforms.index')}}">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Platformlar
                             </a>

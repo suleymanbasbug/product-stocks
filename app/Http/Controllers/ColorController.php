@@ -3,9 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Category;
-
-class CategoryController extends Controller
+use App\Models\Color;
+class ColorController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +13,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::all();
-        return view('category',compact('categories'));
+        $colors = Color::all();
+        return view('colors.list',compact('colors'));
     }
 
     /**
@@ -25,8 +24,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
-        return view('categories.create');
+        return view('colors.create');
     }
 
     /**
@@ -37,8 +35,8 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        Category::create($request->post());
-        return redirect()->route('categories.index')->withSuccess('Kategori Başarıyla Eklendi');
+        Color::create($request->post());
+        return redirect()->route('colors.index')->withSuccess('Renk başarıyla eklendi');
     }
 
     /**
@@ -60,8 +58,8 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        $category = Category::find($id) ?? abort(404,'Kategori Bulunamadı');
-        return view('categories.edit',compact('category'));
+        $color = Color::find($id) ?? abort(404,'Renk bulunamadı');
+        return view('colors.edit',compact('color'));
     }
 
     /**
@@ -73,10 +71,9 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
-        $category = Category::find($id) ?? abort(404,'Kategori Bulunamadı');
-        Category::where('id',$id)->update($request->except(['_method','_token']));
-        return redirect()->route('colors.index')->withSuccess('Kategori işlemi başarıyla gerçekleşti');
+        $color = Color::find($id) ?? abort(404,'Renk Bulunamadı');
+        Color::where('id',$id)->update($request->except(['_method','_token']));
+        return redirect()->route('categories.index')->withSuccess('Renk güncelleme işlemi başarıyla gerçekleşti');
     }
 
     /**
@@ -87,8 +84,6 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        $category = Category::find($id) ?? abort(404,'Kategori Bulunamadı');
-        $category->delete();
-        return redirect()->route('categories.index')->withSuccess('Kategori başarıyla silindi');
+        //
     }
 }

@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\ProductContoller;
+use App\Http\Controllers\ColorController;
+use App\Http\Controllers\PlatformController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -33,6 +35,8 @@ Route::group(['prefix'=>'admin'],function(){
     Route::resource('brands',BrandController::class);
     Route::get('products/{id}',[ProductContoller::class,'destroy'])->whereNumber('id')->name('products.destroy');
     Route::resource('products',ProductContoller::class);
+    Route::resource('colors',ColorController::class);
+    Route::resource('platforms',PlatformController::class);
 });
 Route::get('/admin', function () {
     return view('master');

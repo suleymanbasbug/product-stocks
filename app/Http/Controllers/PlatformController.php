@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Category;
+use App\Models\Platform;
 
-class CategoryController extends Controller
+class PlatformController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +14,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::all();
-        return view('category',compact('categories'));
+        $platforms = Platform::all();
+        return view('platforms.list',compact('platforms'));
     }
 
     /**
@@ -25,8 +25,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
-        return view('categories.create');
+        return view('platforms.create');
     }
 
     /**
@@ -37,8 +36,8 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        Category::create($request->post());
-        return redirect()->route('categories.index')->withSuccess('Kategori Başarıyla Eklendi');
+        Platform::create($request->post());
+        return redirect()->route('platforms.index')->withSuccess('Platform başarılı şekilde eklendi');
     }
 
     /**
@@ -60,8 +59,8 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        $category = Category::find($id) ?? abort(404,'Kategori Bulunamadı');
-        return view('categories.edit',compact('category'));
+        $platform = Platform::find($id) ?? abort(404,'Platform bulunamadı');
+        return view('platforms.edit',compact('platform'));
     }
 
     /**
@@ -73,10 +72,9 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
-        $category = Category::find($id) ?? abort(404,'Kategori Bulunamadı');
-        Category::where('id',$id)->update($request->except(['_method','_token']));
-        return redirect()->route('colors.index')->withSuccess('Kategori işlemi başarıyla gerçekleşti');
+        $platform = Platform::find($id) ?? abort(404,'Kategori Bulunamadı');
+        Platform::where('id',$id)->update($request->except(['_method','_token']));
+        return redirect()->route('platforms.index')->withSuccess('Platform güncelleme işlemi başarıyla gerçekleşti');
     }
 
     /**
@@ -87,8 +85,6 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        $category = Category::find($id) ?? abort(404,'Kategori Bulunamadı');
-        $category->delete();
-        return redirect()->route('categories.index')->withSuccess('Kategori başarıyla silindi');
+        //
     }
 }
