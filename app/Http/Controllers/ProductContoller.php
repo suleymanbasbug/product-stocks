@@ -19,6 +19,9 @@ class ProductContoller extends Controller
     {
         $products = Product::all();
         return view('products.list',compact('products'));
+        
+        $product = Product::find(1)->images;
+        return $product;
     }
 
     /**
@@ -41,22 +44,28 @@ class ProductContoller extends Controller
      */
     public function store(Request $request)
     {
-        return $request;
-        return $request->file('file');
-        $request->validate([
-            'file' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ]);
-        $image = new Image;
-        if ($request->file('file')) {
-            $imagePath = $request->file('file');
-            $imageName = $imagePath->getClientOriginalName();
+        $product = new Product;
+        $product->name = $request->name;
+        $product->description = $request->description;
+        $product->brand_id = $request->brand_id;
+        $product->category_id = $request->category_id;
+        $product->save();
+        if($request->TotalImages>0){
+            for($i=0; $i<$request->TotalImages; $i++){
+                if ($request->hasFile('images'.$i)) 
+                {
+                    $file = $request->file('images'.$i);
+                    $name = $file->getClientOriginalName();
+                    $path = $file->storeAs('uploads', $name, 'public');
+                    $insert[$i]['name'] = $name;
+                    $insert[$i]['path'] = 'storage/'.$path;
+                    $insert[$i]['product_id'] = $product->id;
+                }
+            }
+        Image::insert($insert);
+        }        
+        
 
-            $path = $request->file('file')->storeAs('uploads', $imageName, 'public');
-        }
-        $image->name = $imageName;
-        $image->path = '/storage/'.$path;
-        $image->product_id = 1;
-        $image->save();
 
         return response()->json('Image uploaded successfully');
     }

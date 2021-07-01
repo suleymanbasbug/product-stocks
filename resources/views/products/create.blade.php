@@ -1,11 +1,13 @@
 @extends('master')
+@section('head-style')
+<style>
+  .show-multiple-image-preview img {
+    padding: 6px;
+    max-width: 100px;
+  }
+</style>
+@endsection
 @section('content')
-    <div class="sa d-none" id="sa">
-      asdasdasdasdsad
-      asdasdas
-
-    </div>
-    <button onclick="sa()" class="btn btn-secondary">sa</button>
     <div class="card">
         <div class="card-body">
             <form
@@ -68,12 +70,6 @@
 @endsection
 @section('script')
 <script>
-  function sa() {
-    $('#sa').removeClass("d-none");
-    $("#sa").append("<h1>Aleyküm Sa</h1>");
-  }
-</script>
-<script>
     $(document).ready(function (e) {
       let images1 = [];
       $.ajaxSetup({
@@ -108,9 +104,7 @@
         e.preventDefault();
         var formData = new FormData(this);
         let TotalImages = images1.length;
-        let images = $("#images")[0];
         for (let i = 0; i < TotalImages; i++) {
-          console.log(images1[i])
           formData.append("images" + i, images1[i]);
         }
         formData.append("TotalImages", TotalImages);
@@ -122,7 +116,7 @@
           contentType: false,
           processData: false,
           success: (data) => {
-              console.log(data);
+            console.log(data);
             this.reset();
             alert("Images has been uploaded using jQuery ajax with preview");
             $(".show-multiple-image-preview").html("");
