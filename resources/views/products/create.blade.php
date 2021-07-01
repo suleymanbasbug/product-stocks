@@ -116,10 +116,7 @@
           contentType: false,
           processData: false,
           success: (data) => {
-            console.log(data);
-            this.reset();
-            alert("Images has been uploaded using jQuery ajax with preview");
-            $(".show-multiple-image-preview").html("");
+            window.location.href = "/admin/products";
           },
           error: function (data) {
             console.log(data);

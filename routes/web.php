@@ -31,6 +31,7 @@ Route::group(['prefix'=>'admin'],function(){
     Route::resource('categories',CategoryController::class);
     Route::get('brands/{id}',[BrandController::class,'destroy'])->whereNumber('id')->name('brands.destroy');
     Route::resource('brands',BrandController::class);
+    Route::get('products/{id}',[ProductContoller::class,'destroy'])->whereNumber('id')->name('products.destroy');
     Route::resource('products',ProductContoller::class);
 });
 Route::get('/admin', function () {

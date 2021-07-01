@@ -20,8 +20,6 @@ class ProductContoller extends Controller
         $products = Product::all();
         return view('products.list',compact('products'));
         
-        $product = Product::find(1)->images;
-        return $product;
     }
 
     /**
@@ -64,10 +62,7 @@ class ProductContoller extends Controller
             }
         Image::insert($insert);
         }        
-        
-
-
-        return response()->json('Image uploaded successfully');
+        return redirect()->route('products.index')->withSuccess('Ürün güncelleme işleme başarılı');
     }
 
     /**
@@ -89,7 +84,11 @@ class ProductContoller extends Controller
      */
     public function edit($id)
     {
-        //
+        $product = Product::find($id) ?? abort(404,'Ürün bulunamadı');
+        $categories = Category::all();
+        $brands = Brand::all();
+        return view('products.edit',compact('product','categories','brands'));
+
     }
 
     /**
@@ -101,7 +100,9 @@ class ProductContoller extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $product = Product::find($id) ?? abort(404,'Ürün bulunamadı');
+        Product::where('id',$id)->update($request->except(['_method','_token']));
+        return redirect()->route('products.index')->withSuccess('Ürün güncelleme işleme başarılı');
     }
 
     /**
@@ -112,6 +113,8 @@ class ProductContoller extends Controller
      */
     public function destroy($id)
     {
-        //
+        $product = Product::find($id) ?? abort(404,'Ürün bulunamadı');
+        $product->delete();
+        return redirect()->route('products.index')->withSuccess('Ürün silme işleme başarılı');
     }
 }

@@ -19,6 +19,8 @@
 <th scope="col">Adı</th>
 <th scope="col">Acıklama</th>
 <th scope="col">Resimler</th>
+<th scope="col">Kategori</th>
+<th scope="col">Marka</th>
 <th scope="col">İşlemler</th>
 </tr>
 </thead>
@@ -39,13 +41,14 @@
     @else
     <td></td>
     @endif
-    
+    <td>{{$product->category->name}}</td>
+    <td>{{$product->brand->name}}</td>
 
     <td>
-        <a href=""
+        <a href="{{route('products.edit',$product->id)}}"
            class="btn btn-block btn-primary btn-xs"><span class="glyphicon glyphicon-pencil"></span>
             Güncelle</a>
-            <a data-url=""
+            <a data-url="{{route('products.destroy',$product->id)}}"
         class="btn btn-block btn-danger btn-xs delete-confirm"><span class="glyphicon glyphicon-pencil"></span>
          Sil</a>
     </td>
